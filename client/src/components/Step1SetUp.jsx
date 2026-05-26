@@ -30,7 +30,7 @@ const [analyzing, setAnalyzing] = useState(false);
   const handleUploadResume = async () => {
   const formdata = new FormData();
   formdata.append("resume", resumeFile);
-   const serverUrl = "http://localhost:8000";
+   const serverUrl = import.meta.env.VITE_SERVER_URL;
   try {
     const result = await axios.post(serverUrl + "/api/interview/resume", formdata,
       {withCredentials: true,})
