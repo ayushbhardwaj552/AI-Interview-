@@ -7,7 +7,7 @@ import {
   FaMicrophoneAlt,
   FaChartLine,
 } from "react-icons/fa";
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from "axios";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -27,6 +27,17 @@ const [skills, setSkills] = useState([]);
 const [resumeText, setResumeText] = useState("");
 const [analysisDone, setAnalysisDone] = useState(false);
 const [analyzing, setAnalyzing] = useState(false);
+const [toast, setToast] = useState(null);
+
+const showToast = useCallback((message) => {
+  setToast(message);
+}, []);
+
+useEffect(() => {
+  if (!toast) return;
+  const timer = setTimeout(() => setToast(null), 4000);
+  return () => clearTimeout(timer);
+}, [toast]);
   const handleUploadResume = async () => {
   const formdata = new FormData();
   formdata.append("resume", resumeFile);
@@ -50,6 +61,11 @@ setAnalyzing(false);
   }
 }; 
     const handleStart = async () =>{
+      if (!userData || userData.credits < 50) {
+        showToast("Not enough credits. You need at least 50 credits to start an interview.");
+        return;
+      }
+
        setLoading(true);
       try {
   const result = await axios.post(serverUrl + "/api/interview/generate-questions", {
@@ -76,6 +92,7 @@ setAnalyzing(false);
   onStart(result.data);
 } catch (error) {
    console.log(error);
+   showToast(error.response?.data?.message || "Failed to start interview. Please try again.");
    setLoading(false);
  }
     } 
@@ -274,6 +291,11 @@ onClick={() => document.getElementById("resumeUpload").click()}
 </motion.div>
       </div>
 
+      {toast && (
+        <div className='fixed bottom-6 left-1/2 -translate-x-1/2 z-50 max-w-md w-[calc(100%-2rem)] bg-red-50 border border-red-200 text-red-700 px-5 py-3 rounded-xl shadow-lg text-sm font-medium text-center'>
+          {toast}
+        </div>
+      )}
     </motion.div>
   )
 }
