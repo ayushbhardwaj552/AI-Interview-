@@ -21,7 +21,7 @@ import AdminInterviewDetail from "./pages/admin/AdminInterviewDetail";
 import AdminPayments from "./pages/admin/AdminPayments";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
 
-export const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:8000";
+export const serverUrl = import.meta.env.VITE_SERVER_URL ;
 
 function App(){
   const dispatch = useDispatch();
