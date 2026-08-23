@@ -17,7 +17,7 @@ const app = express();
 // FRONTEND_URL is already defined in .env — just update it to your Vercel URL.
 app.use(cors({
 
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  origin: process.env.FRONTEND_URL,
   credentials: true
 }));
 
