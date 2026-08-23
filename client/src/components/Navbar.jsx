@@ -109,12 +109,17 @@ export const Navbar = () => {
                             <div className='absolute right-0 mt-3 w-48 bg-white 
 shadow-xl border border-gray-200 rounded-xl p-4 
 z-50'>
-                                <p className='text-md text-blue-500 font-medium 
-    mb-1'>{userData?.name}</p>
-                                <button onClick={() => navigate("/history")}
-                                    className='w-full text-left text-sm py-2 
-hover:text-black text-gray-600'>Interview
-                                    History</button>
+                                <p className='text-md text-blue-500 font-medium mb-1'>{userData?.name}</p>
+
+                                {userData?.role === 'admin' && (
+                                    <button onClick={() => { navigate("/admin"); setshowUserPopup(false); }}
+                                        className='w-full text-left text-sm py-2 hover:text-emerald-600 text-emerald-700 font-semibold border-b border-gray-100 mb-1'>
+                                        Admin Dashboard
+                                    </button>
+                                )}
+
+                                <button onClick={() => { navigate("/history"); setshowUserPopup(false); }}
+                                    className='w-full text-left text-sm py-2 hover:text-black text-gray-600'>Interview History</button>
 
                                 <button
                                     onClick={handleLogout}
