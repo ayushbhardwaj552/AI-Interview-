@@ -16,9 +16,11 @@ const app = express();
 // Use FRONTEND_URL env var so the same server works locally AND on Render.
 // FRONTEND_URL is already defined in .env — just update it to your Vercel URL.
 app.use(cors({
+
   origin: process.env.FRONTEND_URL || "http://localhost:5173",
   credentials: true
 }));
+
 
 app.use(express.json());
 app.use(cookieParser());
